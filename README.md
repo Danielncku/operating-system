@@ -1,112 +1,129 @@
-# Operating Systems Laboratory 
+# Operating Systems Laboratory Portfolio
 
-Four operating systems labs implemented in C and Linux kernel space. Together, the labs cover core OS topics including inter-process communication, shell design, multithreading, synchronization, kernel modules, and file system implementation.
+This repository contains my Operating Systems lab work from Lab 1 to Lab 4. The projects were implemented mainly in C on Linux, and they cover several important OS topics such as inter-process communication, shell design, multithreading, synchronization, kernel modules, and file system implementation.
 
-`
+**Suggested repository name:** `operating-systems-lab-portfolio`
 
 ## Overview
 
-This project was developed as a hands-on operating systems practice repository. Each lab focuses on a different layer of the OS stack, from user-space process communication to kernel-space extensions and a custom in-memory file system.
+These labs helped me understand operating systems from both user space and kernel space. Instead of only learning the theory in class, I was able to implement the core mechanisms by myself and observe how processes, threads, synchronization primitives, and file systems actually work in practice.
 
-## Lab Structure
+## Lab 1: Inter-Process Communication
 
-### Lab 1: Inter-Process Communication
-
-Lab 1 compares two IPC mechanisms for sender-receiver communication:
+In Lab 1, I implemented communication between a sender process and a receiver process using two different IPC mechanisms:
 
 - Message queues
 - Shared memory
 - POSIX semaphores for synchronization
-- Execution time measurement for communication overhead
+- Timing measurement for performance comparison
 
-**Key learning outcomes:**
+Through this lab, I learned how two processes can exchange data in different ways. Message queues made the communication flow more explicit, while shared memory felt faster but required more careful synchronization. Writing both versions helped me understand the trade-off between simplicity and efficiency.
 
-- Designing mailbox-based communication between processes
-- Coordinating producer-consumer style workflows
-- Comparing message-passing and shared-memory trade-offs
-- Using Linux IPC APIs such as `msgget`, `msgsnd`, `msgrcv`, `shmget`, `shmat`, and `sem_open`
+**What I learned from this lab:**
 
-### Lab 2: Custom Linux Shell
+- How Linux IPC mechanisms work in practice
+- The difference between message passing and shared memory
+- Why synchronization is necessary when processes access shared resources
+- How to use `msgget`, `msgsnd`, `msgrcv`, `shmget`, `shmat`, and `sem_open`
 
-Lab 2 implements a miniature shell that supports both built-in and external commands.
+**My reflection:**
 
-**Core features:**
+This was the first lab that made me realize operating systems is not only about concepts like process or communication in a textbook. Once I implemented both mechanisms myself, I could clearly see that correctness and synchronization are just as important as functionality.
+
+## Lab 2: Custom Linux Shell
+
+In Lab 2, I built a small shell that supports command execution, built-in commands, redirection, and pipelines.
+
+**Main features:**
 
 - Built-in commands such as `cd`, `pwd`, `echo`, `record`, and `exit`
-- External command execution using `fork` and `execvp`
+- External command execution through `fork` and `execvp`
 - Input and output redirection with `<` and `>`
-- Pipelining with `|`
-- Command parsing and command history management
+- Piping with `|`
+- Basic command parsing and history recording
 
-**Key learning outcomes:**
+**What I learned from this lab:**
 
-- Process creation and replacement
-- Parent-child process control with `waitpid`
-- File descriptor manipulation using `open`, `dup2`, and `close`
-- Shell parsing and command execution flow
+- How a shell creates child processes to run commands
+- How `fork`, `execvp`, and `waitpid` work together
+- How file descriptors are redirected using `open` and `dup2`
+- How pipelines connect multiple processes
+- How command parsing affects the overall shell behavior
 
-### Lab 3: Threads, Synchronization, and Kernel Interaction
+**My reflection:**
 
-Lab 3 explores multithreaded programming and Linux kernel interaction through several exercises.
+This lab helped me understand the workflow behind commands that I use every day in Linux. Before this project, I only knew how to use a shell. After implementing one myself, I understood much better how commands are parsed, how child processes are created, and how pipes and redirection are managed internally. It also trained me to think more carefully about edge cases in user input.
 
-**Covered topics:**
+## Lab 3: Threads, Synchronization, and Kernel Interaction
+
+Lab 3 focused on concurrency and Linux kernel interaction. The exercises included multithreaded programming, synchronization, matrix multiplication, and communication between user space and kernel space through `/proc`.
+
+**Topics covered:**
 
 - POSIX threads (`pthread`)
-- Spin locks and synchronization
-- Race condition control in shared-variable updates
+- Spin locks and shared-variable protection
+- Race condition handling
 - Parallel matrix multiplication
 - Linux kernel modules
-- `/proc` file system interfaces for user-kernel communication
+- `/proc` interface design
 
-**Key learning outcomes:**
+**What I learned from this lab:**
 
-- Protecting shared data in concurrent programs
-- Implementing spin-lock based synchronization
-- Dividing workloads across threads for parallel computation
-- Exposing kernel data to user space through `/proc`
-- Observing thread identity, scheduling-related information, and process metadata
+- Why race conditions happen in multithreaded programs
+- How spin locks can be used to protect shared data
+- How work can be divided across multiple threads
+- How to create a kernel module and expose information through `/proc`
+- How user programs and kernel modules can interact
 
-### Lab 4: Custom In-Memory File System
+**My reflection:**
 
-Lab 4 implements a simple Linux in-memory file system kernel module named `osfs`.
+This lab was especially important for me because it connected concurrency with real system behavior. I could directly observe that if synchronization is not handled correctly, the output becomes inconsistent. The kernel module part also gave me a clearer idea of the boundary between user space and kernel space, which felt much more concrete after actually reading from and writing to `/proc`.
+
+## Lab 4: Custom In-Memory File System
+
+In Lab 4, I implemented a simple in-memory file system kernel module named `osfs`. This lab brought together many OS concepts in one project, including file system structure, metadata management, and integration with the Linux VFS layer.
 
 **Main components:**
 
-- File system registration and mount lifecycle
+- File system registration and mount handling
 - Superblock initialization
 - Inode allocation and management
 - Directory lookup and iteration
-- Regular file read and write operations
+- File read and write operations
 - Symbolic link support
-- Block and inode bitmap management
+- Bitmap-based block and inode management
 
-**Key learning outcomes:**
+**What I learned from this lab:**
 
-- Understanding the Linux Virtual File System (VFS) model
-- Implementing superblock, inode, file, and directory operations
-- Managing file system metadata and data blocks
-- Mapping custom in-memory structures to kernel VFS objects
+- How the Linux Virtual File System (VFS) abstracts different file systems
+- The role of superblocks, inodes, directory entries, and file operations
+- How file metadata and data blocks are managed
+- How a custom file system is mounted and connected to kernel interfaces
 
-## Technologies and Concepts Learned
+**My reflection:**
 
-Across Labs 1 to 4, this repository demonstrates practical experience with:
+This was the most challenging lab in the series, but also the one I learned the most from. Implementing a file system required me to connect many concepts that had previously seemed separate. I gained a deeper understanding of how the operating system organizes files internally, and I also became more comfortable reading kernel-oriented code and thinking about data structures at the system level.
+
+## Technologies and Skills Learned
+
+Across these four labs, I strengthened my understanding of:
 
 - C systems programming
-- Linux process and thread management
+- Linux process management
 - Inter-process communication
 - POSIX semaphores and spin locks
-- File descriptors and redirection
-- Shell architecture
-- Pthreads-based concurrency
+- Process creation and synchronization
+- File descriptor redirection and pipes
+- Pthreads and concurrent programming
 - Linux kernel module development
-- `/proc` file system programming
-- Virtual File System internals
+- `/proc` file system interaction
+- Virtual File System (VFS) concepts
 - In-memory file system design
 
 ## Repository Layout
 
 ```text
-LAB1/   IPC with message queues, shared memory, and semaphores
-LAB2/   Custom shell with parsing, redirection, and pipes
+LAB1/   IPC using message queues, shared memory, and semaphores
+LAB2/   Custom shell with built-in commands, redirection, and pipes
 LAB3/   Threads, synchronization, matrix computation, and kernel modules
 Lab4/   In-memory Linux file system implementation
