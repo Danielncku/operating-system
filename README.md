@@ -2,7 +2,7 @@
 
 This repository contains my Operating Systems lab work from Lab 1 to Lab 4. The projects were implemented mainly in C on Linux, and they cover several important OS topics such as inter-process communication, shell design, multithreading, synchronization, kernel modules, and file system implementation.
 
-**Suggested repository name:** `operating-systems-lab-portfolio`
+
 
 ## Overview
 
